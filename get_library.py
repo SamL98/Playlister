@@ -1,16 +1,7 @@
-#import spotipy.util as util
-
 import requests
 
 from search_feats import return_token, format_track
 from lfuncs import lmap
-
-"""
-client_id = '9a84cc6bdd8849d4a5270336e60469af'
-client_secret = 'eebeea17f3634ac484a98af4f79db418'
-redirect_uri = 'http://localhost:8080/callback'
-token = util.prompt_for_user_token('lerner98', 'user-read-recently-played', client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri)
-"""
 
 AUTH_HEADER = {'Authorization': 'Bearer ' + return_token()}
 call_counter = 0
@@ -42,9 +33,3 @@ if __name__ == '__main__':
         tracks.extend(new_tracks)
         
     save_to_disk(tracks)
-
-"""
-if token:
-    save_to_disk(fetch_library())
-else:
-    print('Could not get spotipy token')"""

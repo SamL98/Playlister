@@ -22,13 +22,11 @@ batches = np.array(np.split(dataset, len(dataset)//5))
 timesteps = 4
 data_dim = len(dataset[0])
 
-#data = np.hsplit(batches, np.array([timesteps, 1]))
 X = batches[:,:-1,:]
 y = batches[:,-1,:]
 
 model = Sequential()
 model.add(LSTM(128, input_shape=(timesteps, data_dim), return_sequences=False))
-#model.add(TimeDistributed(Dense(data_dim, activation='sigmoid'), input_shape=(timesteps, data_dim)))
 model.add(Dense(data_dim, activation='sigmoid'))
 model.compile(loss='mse', optimizer='sgd')
 

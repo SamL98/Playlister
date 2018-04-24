@@ -1,8 +1,10 @@
-import spotipy.util as util
-import requests
 from datetime import datetime
 import time
 import os
+
+import spotipy.util as util
+import requests
+
 from lfuncs import *
 
 base_url = 'https://api.spotify.com/v1/'
@@ -37,8 +39,8 @@ def get_recently_played(token):
 		tfile.write(','.join([track['artist'], str(track['duration']), track['id'], track['name'], str(track['timestamp'])]) + '\n')
 	tfile.close()
 
-client_id = '9a84cc6bdd8849d4a5270336e60469af'
-client_secret = 'eebeea17f3634ac484a98af4f79db418'
+client_id = os.environ['SPOTIPY_CLIENT_ID']
+client_secret = os.environ['SPOTIPY_CLIENT_SECRET']
 redirect_uri = 'http://localhost:8080/callback'
 
 token = util.prompt_for_user_token('lerner98', 'user-read-recently-played', client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri)

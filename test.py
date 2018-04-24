@@ -41,11 +41,7 @@ jfile.close()
 
 model = model_from_json(model_json)
 model.load_weights('model.h5')
-model.compile(loss='mse', optimizer='rmsprop')
-
-def print_first_and_last(closest):
-    print(f'\nClosest: {closest[0]}')
-    print(f'Farthest: {closest[-1]}\n')
+model.compile(loss='mse', optimizer='sgd')
 
 playlist_ids = all_ids[:]
 
@@ -59,21 +55,10 @@ for _ in range(20):
 
     target = denorm_pred[0]
     tracks = get_tracks_by_ids(ids)
-    #rex = get_track_from_features(target, ids)
 
     target_mat = np.tile(target, (len(lib_dataset), 1))
-    #rex = lmap(lambda x: np.sqrt((target - x)**2).sum(), lib_dataset)
     rex = np.sqrt((target_mat - lib_dataset)**2).sum(axis=1)
     closest = np.argsort(rex).tolist()
-    
-    #print_first_and_last(np.sort(rex).tolist())
-    """print_first_and_last(
-        lmap(
-            lambda t: t['name'],
-            get_tracks_by_ids(
-                lmap(
-                    lambda x: lib_ids[x], 
-                    closest[:25] + closest[-25:]))))"""
 
     rex_ids = [lib_ids[i] for i in closest[:50]]
     rex = get_tracks_by_ids(rex_ids)
@@ -90,13 +75,7 @@ for _ in range(20):
     )
     playlist_ids.append(rec['id'])
     
-    """for track in tracks:
-        print(track['name'] + ' - ' + track['artist'])
-    print('\t||')
-    print('\t||')
-    print('\t\/')"""
     print(rec['name'] + '-' + rec['artist'])
-    #print('-------')
 
     X[0][:-1] = X[0][1:]
     X[0][-1] = target

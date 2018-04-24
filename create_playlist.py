@@ -1,3 +1,5 @@
+import os
+
 import spotipy.util as util
 import requests
 
@@ -24,8 +26,8 @@ def create_playlist(name, tracks):
     assert r.status_code == 201, "Add tracks to playlist failed: %d" % r.status_code
 
 
-client_id = '9a84cc6bdd8849d4a5270336e60469af'
-client_secret = 'eebeea17f3634ac484a98af4f79db418'
+client_id = os.environ['SPOTIPY_CLIENT_ID']
+client_secret = os.environ['SPOTIPY_CLIENT_SECRET']
 redirect_uri = 'http://localhost:8080/callback'
 token = util.prompt_for_user_token('lerner98', 'user-read-recently-played user-library-read playlist-modify-public', client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri)
 
