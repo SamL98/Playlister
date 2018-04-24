@@ -1,0 +1,21 @@
+Todo:
+
+*** 4/23/18 ***
+
+Change recommend next track from searching spotify recommendations to searching \
+song with smallest Euclidean distance to the feature vector output by the model.
+/\
+||
+completed
+
+*** 4/24/18 ***
+
+Think about changing seed size. Either go from 4->9 or somehow expand size over time.\
+The latter would require multiple models with different input sizes, I think.
+
+For now, just implement a (desktop?) interface to select 4 songs and output the \
+resulting playlist.
+
+Also, maybe get spotify recommendations based off of top 1 or 2 closest library \
+tracks to interleave into playlist. Kind of like a Daily Mix to get a nice variation \
+of familiar and new tracks.
