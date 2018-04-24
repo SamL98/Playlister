@@ -2,6 +2,7 @@ from sklearn.preprocessing import normalize
 from keras.layers import Dense, TimeDistributed, LSTM
 from keras.models import Sequential
 from keras.optimizers import SGD
+from keras.callbacks import EarlyStopping
 import numpy as np
 
 from compile_tracks import get_feats 
@@ -28,10 +29,12 @@ y = batches[:,-1,:]
 model = Sequential()
 model.add(LSTM(128, input_shape=(timesteps, data_dim), return_sequences=False))
 model.add(Dense(data_dim, activation='sigmoid'))
-model.compile(loss='mse', optimizer='sgd')
 
-sgd = SGD(lr=0.01, momentum=0.9, decay=1e-6)
-model.fit(X, y, batch_size=2, epochs=100)
+#sgd = SGD(lr=0.01, momentum=0.09, decay=1e-6)
+model.compile(loss='mse', optimizer='rmsprop')
+
+early_stop = EarlyStopping(monitor='loss', min_delta=1e-4, verbose=0, patience=1, mode='auto')
+model.fit(X, y, batch_size=1, epochs=100, callbacks=[early_stop])
 
 model_json = model.to_json()
 with open('mode.json', 'w') as jfile:

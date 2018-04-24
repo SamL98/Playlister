@@ -5,7 +5,7 @@ import os
 import spotipy.util as util
 import requests
 
-from lfuncs import *
+from lfuncs import lmap
 
 base_url = 'https://api.spotify.com/v1/'
 

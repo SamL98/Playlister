@@ -9,12 +9,15 @@ from search_feats import get_track_from_features, get_tracks_by_ids, get_track_b
 from create_playlist import create_playlist
 from lfuncs import lmap
 
+# normalize the dataset by column. also return the minimum and maximum for each
+# column so that realistic values can be obtained after going through the model.
 def norm_reversible(dataset):
     mins = np.amin(dataset, axis=0)
     maxs = np.amax(dataset, axis=0)
     dataset = normalize(dataset, axis=1, norm='l1')
     return dataset, mins, maxs
 
+# denormalize a vector given the minimums and maximums previously recorded
 def reverse_norm(vec, mins, maxs):
     return (maxs - mins) * vec + mins
 
@@ -83,4 +86,4 @@ for _ in range(20):
     ids[:-1] = ids[1:]
     ids[-1] = rec['id']
 
-create_playlist(test_no, playlist_ids)
+#create_playlist(test_no, playlist_ids)
